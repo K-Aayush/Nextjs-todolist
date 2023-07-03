@@ -10,11 +10,15 @@ export default function Home() {
   const addTodo = () => {
     let todos = localStorage.getItem("todos")
     let todosJson = todos ? JSON.parse(todos) : [];
-
-    todosJson.push(todo);
-    localStorage.setItem("todos", JSON.stringify(todosJson));
-
-    setTodo({ title: null, desc: null });
+    if(todosJson.filter(value=>{ return value.title == todo.title }).length>0){
+      alert("ToDo with this title already exists")
+      setTodo({ title: "", desc: "" });
+    } else{
+      todosJson.push(todo);
+      localStorage.setItem("todos", JSON.stringify(todosJson));
+      alert("ToDo has been added")
+      setTodo({ title: "", desc: "" });
+    }
     // if (todos){
     //   let todosJson = JSON.parse(todos)
     //   todosJson = [...todosJson, todo];
