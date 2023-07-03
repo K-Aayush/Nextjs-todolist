@@ -5,15 +5,30 @@ import { useState } from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [todo, setTodo] = useState({title: "", desc: ""})
+  const [todo, setTodo] = useState({title: null, desc: null})
 
   const addTodo = () => {
+    let todos = localStorage.getItem("todos")
+    let todosJson = todos ? JSON.parse(todos) : [];
 
+    todosJson.push(todo);
+    localStorage.setItem("todos", JSON.stringify(todosJson));
+
+    setTodo({ title: null, desc: null });
+    // if (todos){
+    //   let todosJson = JSON.parse(todos)
+    //   todosJson = [...todosJson, todo];
+    //   // todosJson.push(todo)  directly pushing didn't work
+    //   localStorage.setItem("todos", JSON.stringify(todosJson));
+    // }
+    // else {
+    //   localStorage.setItem("todos", JSON.stringify([todo]));
+    // }
   }
 
   const onChange = (e) => {
     
-    setTodo({...todo, [e.target.name]: [e.target.value]} )
+    setTodo({...todo, [e.target.name]: e.target.value} )
   }
 
   return (
